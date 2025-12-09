@@ -95,7 +95,7 @@ export default function Categories({ categories }: { categories: any[] }) {
                         <div>
                             <InputLabel htmlFor="category_name" value="category_name" />
                             <select
-                                name="category_name"
+                                name="category_id"
                                 id="category_name"
                                 value={data.category_id}
                                 onChange={(e) => setData('category_id', e.target.value)}
@@ -122,7 +122,7 @@ export default function Categories({ categories }: { categories: any[] }) {
                                 value={data.slug}
                                 className="mt-1 block w-full"
                                 isFocused={true}
-
+                                onChange={(e) => setData('slug', e.target.value)}
                             />
 
                             <InputError message={errors.slug} className="mt-2" />
