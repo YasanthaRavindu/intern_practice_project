@@ -28,6 +28,7 @@ export default function Products({ products }: { products: any[] }) {
                         <th>Title</th>
                         <th>Price</th>
                         <th>Slug</th>
+                        <th>Category ID</th>
                         <th>Status</th>
                         <th>Action</th>
                     </thead>
@@ -37,6 +38,7 @@ export default function Products({ products }: { products: any[] }) {
                             <td>{product.title}</td>
                             <td>{product.price}</td>
                             <td>{product.slug}</td>
+                            <td>{product.category_id}</td>
                             <td>{product.status}</td>
                             <td>-</td>
                         </tr>
