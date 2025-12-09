@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 
-export default function Products() {
+export default function Products({ products }: { products: any[] }) {
     return (
         <AuthenticatedLayout
             header={
@@ -21,6 +21,31 @@ export default function Products() {
 
 
             {/*  */}
+            <div>
+                <table className='table'>
+                    <thead>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Slug</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>{products.map((product) => (
+                        <tr>
+                            <td>{product.id}</td>
+                            <td>{product.title}</td>
+                            <td>{product.price}</td>
+                            <td>{product.slug}</td>
+                            <td>{product.status}</td>
+                            <td>-</td>
+                        </tr>
+
+                    ))}
+
+                    </tbody>
+                </table>
+            </div>
 
         </AuthenticatedLayout>
     );
