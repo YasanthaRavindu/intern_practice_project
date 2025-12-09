@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->decimal('price',10,4)->nullable();
+            $table->string('slug')->nullable();
             $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('cascade');
             $table->enum('status', ['draft','active','inactive'])->default('draft');
             $table->timestamps();

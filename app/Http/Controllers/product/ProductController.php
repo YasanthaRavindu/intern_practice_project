@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\product;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Inertia\Inertia;
@@ -19,13 +20,22 @@ class ProductController extends Controller
     public function create()
     {
 
-        return view('product.create');
+        $categories=Category::all();
+        return Inertia::render('Products/Create/Create',[
+            'categories'=>$categories
+        ]);
     }
 
     public function store(Request $request)
     {
+        //dd($request->all());
+        try{
+            Product::create($request->all());
+            return redirect()->route('products.index')->with('success','Product Stored Success fully.');
+        }catch(\Exception $e){
+            return redirect()->route('products.create')->withInput()->with('error','Error: '. $e->getMessage());
+        }
 
-        Product::create($request->all())->with('success','Product Stored Success fully.');
     }
 
     public function show($id)
