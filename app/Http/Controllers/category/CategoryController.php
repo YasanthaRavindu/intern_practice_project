@@ -10,16 +10,17 @@ use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
+    public function __construct(protected CategoryInterface $categoryInterface){}
+
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         //$categories=Category::all();
-        $categoryInterface = app()->make(CategoryInterface::class);
-        //$categories = $categoryInterface->all(['*','id as value','name as lable']);
-        $categories = $categoryInterface->all(['*'],['products']);
-        dd($categories);
+        $this->categoryInterface->all(['*'],['products']);
+
         return Inertia::render("Categories/All/Index");
     }
 
@@ -28,7 +29,6 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categoryInterface = app()->make(CategoryInterface::class);
 
         $inp="ko";
         $arr=["one"=>"Hi","two"=>"Hello"];
@@ -41,8 +41,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
 
-        $categoryInterface = app()->make(CategoryInterface::class);
-        $categoryInterface->create($request->all());
+      // $categoryInterface = app()->make(CategoryInterface::class);
+        $this->categoryInterface->create($request->all());
         return redirect()->route('categories.index')->with('success');
     }
 
@@ -59,8 +59,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $categoryInterface = app()->make(CategoryInterface::class);
-        $categoryInterface->findById($id);
+
+        $this->categoryInterface->findById($id);
     }
 
     /**
@@ -68,8 +68,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-         $categoryInterface = app()->make(CategoryInterface::class);
-         $categoryInterface->update($id,$request->all());
+
+         $this->categoryInterface->update($id,$request->all());
     }
 
     /**
@@ -77,6 +77,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+         $this->categoryInterface->deleteById($id);
     }
 }
