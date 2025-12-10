@@ -14,10 +14,17 @@ class ProductController extends Controller
     {
 
 
-        $products=Product::all();
+        $products=Product::with('category')->get();
+
         return Inertia::render('Products/All/Index',['products'=>$products]);
     }
 
+
+    //find category
+    private function findCategory($id)
+    {
+
+    }
 
     public function create()
     {

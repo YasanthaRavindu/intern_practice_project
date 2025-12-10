@@ -2,6 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 
 export default function Products({ products }: { products: any[] }) {
+
     return (
         <AuthenticatedLayout
             header={
@@ -38,7 +39,7 @@ export default function Products({ products }: { products: any[] }) {
                             <td>{product.title}</td>
                             <td>{product.price}</td>
                             <td>{product.slug}</td>
-                            <td>{product.category_id}</td>
+                            <td>{product.category ? product.category.name : "N/A"}</td>
                             <td>{product.status}</td>
                             <td>-</td>
                         </tr>
