@@ -4,6 +4,7 @@ namespace App\Http\Controllers\category;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Repositories\All\Categories\CategoryInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,7 +15,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-       //dd('hi');
+        //$categories=Category::all();
+        $categoryInterface = app()->make(CategoryInterface::class);
+        //$categories = $categoryInterface->all(['*','id as value','name as lable']);
+        $categories = $categoryInterface->all(['*'],['products']);
+        dd($categories);
         return Inertia::render("Categories/All/Index");
     }
 
@@ -23,6 +28,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $categoryInterface = app()->make(CategoryInterface::class);
+
         $inp="ko";
         $arr=["one"=>"Hi","two"=>"Hello"];
         return Inertia::render("Categories/Create/Index",['inp' =>$arr]);
@@ -33,7 +40,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create($request->all());
+
+        $categoryInterface = app()->make(CategoryInterface::class);
+        $categoryInterface->create($request->all());
         return redirect()->route('categories.index')->with('success');
     }
 
@@ -50,7 +59,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categoryInterface = app()->make(CategoryInterface::class);
+        $categoryInterface->findById($id);
     }
 
     /**
@@ -58,7 +68,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         $categoryInterface = app()->make(CategoryInterface::class);
+         $categoryInterface->update($id,$request->all());
     }
 
     /**
