@@ -4,17 +4,27 @@ namespace App\Http\Controllers\category;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Repositories\All\Categories\CategoryInterface;
+use App\Services\CategoryServices\CategoryService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
+    public function __construct(
+        protected CategoryInterface $categoryInterface,
+        protected CategoryService $categoryService
+    ){}
+
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-       //dd('hi');
+        //$categories=Category::all();
+        $this->categoryInterface->all(['*'],['products']);
+
         return Inertia::render("Categories/All/Index");
     }
 
@@ -23,6 +33,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+
         $inp="ko";
         $arr=["one"=>"Hi","two"=>"Hello"];
         return Inertia::render("Categories/Create/Index",['inp' =>$arr]);
@@ -33,7 +44,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create($request->all());
+
+      // $categoryInterface = app()->make(CategoryInterface::class);
+        $this->categoryService->storeCategories($request->all());
         return redirect()->route('categories.index')->with('success');
     }
 
@@ -50,7 +63,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
+        $this->categoryInterface->findById($id);
     }
 
     /**
@@ -58,7 +72,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+         $this->categoryInterface->update($id,$request->all());
     }
 
     /**
@@ -66,6 +81,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+         $this->categoryInterface->deleteById($id);
     }
 }
