@@ -5,12 +5,16 @@ namespace App\Http\Controllers\category;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Repositories\All\Categories\CategoryInterface;
+use App\Services\CategoryServices\CategoryService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
-    public function __construct(protected CategoryInterface $categoryInterface){}
+    public function __construct(
+        protected CategoryInterface $categoryInterface,
+        protected CategoryService $categoryService
+    ){}
 
     /**
      * Display a listing of the resource.
@@ -42,7 +46,7 @@ class CategoryController extends Controller
     {
 
       // $categoryInterface = app()->make(CategoryInterface::class);
-        $this->categoryInterface->create($request->all());
+        $this->categoryService->storeCategories($request->all());
         return redirect()->route('categories.index')->with('success');
     }
 
